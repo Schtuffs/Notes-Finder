@@ -1,0 +1,16 @@
+:Test File :Test :File
+- This file is to show how the program works
+-- Such as formatting
+--- With extra lines
+-- Or selecting a file
+- Also allows for testing functionality
+
+:This is a header :Header
+- This is a point
+-- This is a subpoint
+--- This is a sub-subpoint
+---- etc.
+- The subpoints extend their way out
+- But new points go back to the other layer
+--- Also, notice the point level for this point
+--- The point lost a level to account for the "accidental" extra hyphen

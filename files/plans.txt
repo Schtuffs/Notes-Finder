@@ -1,0 +1,11 @@
+:Project Plans :Plans
+- This project was made to practice parsing data
+-- I intend to add some other functions
+--- Reading a specific file
+--- Finding a specific header
+--- Displaying multiple, but only selected files
+--- Displaying multiple, but only selected sections
+- I also wanted to practice my file handling for my next project
+-- Its not exactly the same, but a small refresher will be good
+-- I hope to work a bit with OpenGL to create Chess
+--- We will see how that goes
