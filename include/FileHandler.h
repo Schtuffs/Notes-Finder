@@ -14,13 +14,16 @@
 class FileHandler {
 private:
     // Reads files in a specified path/folder
-    std::vector<std::string> readFileNames(std::string const& path);
+    std::vector<std::string> readFileNames(std::string path);
     
     // Open file
     DataFile open(std::string const& path, std::string& filename);
+
+    // Checks file extension
+    bool checkExtension(std::string const& filename);
     
     // Parse a line from a file
-    int parse(DataSection& dataSection, std::string& line);
+    int parse(DataSection& dataSection, std::string const& line);
 
 public:
     FileHandler();

@@ -1,5 +1,7 @@
 #include "../include/DataFile.h"
 
+extern bool DEBUG;
+
 DataFile::DataFile(std::string _filename) {
     this->filename = _filename;
 }

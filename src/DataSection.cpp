@@ -1,6 +1,6 @@
 #include "../include/DataSection.h"
 
-// DataSection Class
+extern bool DEBUG;
 
 DataSection::DataSection() {
     // Nothing todo

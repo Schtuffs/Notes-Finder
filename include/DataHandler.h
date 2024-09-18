@@ -12,9 +12,10 @@ private:
     std::vector<DataFile> dataFiles;
 
 public:
-    DataHandler(std::string path);
+    DataHandler(std::string const& path);
 
-    void diplay();
+    void diplay(std::string const& filename = "");
+    void displayFilenames();
 
     ~DataHandler();
 };

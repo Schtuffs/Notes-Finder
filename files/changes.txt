@@ -1,0 +1,21 @@
+:Changes v1.0 :v1.0
+- Added file reading
+- Can output all of the information in the read files
+-- Does formatting based on key characters
+
+:Changes v1.1 :v1.1
+- Added an extension checker
+-- No longer will .docx files break the system
+-- Currently only allows .txt files
+--- Maybe will add ability to parse other filetypes
+--- Maybe will convert other filetypes into .txt?
+- Added a commandline argument parser
+-- use -h for a help menu
+- Added the ability to read a single file instead of all files
+-- Can enter the number to select the file
+-- Can enter the file name
+--- Doesn't work if filename has spaces
+---- Use the number instead
+- Changed some logic in filereader to allow for a different filepath
+-- I've been doing testing to make sure its working properly
+-- Everything seems to be good

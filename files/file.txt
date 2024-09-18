@@ -14,3 +14,13 @@
 - But new points go back to the other layer
 --- Also, notice the point level for this point
 --- The point lost a level to account for the "accidental" extra hyphen
+
+:How to use
+- Semi-colon: ':' used for headers
+- Hyphen: '-' used for point indentation, multiple means lower layer
+- Planning to add
+-- Asterisk: '*' used to highlight important point, put after hyphens
+-- Planning to add extra functionality by being able to select colour to use
+-- Not sure how I want the colour selection to be implemented yet though
+---*0x00FF00 Maybe this will make it green
+---* a certain word will be *red*0xFF0000
