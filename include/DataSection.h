@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "../include/CONSTANTS.h"
 
@@ -12,6 +13,7 @@ private:
     std::vector<int> layers;
     std::vector<std::string> points;
 
+    int parse(std::string const& line);
     std::string& formatPoint(std::string& point);
 
 public:
@@ -21,7 +23,7 @@ public:
     void display();
     
     // Adds point to the datasection
-    void addPoint(std::string& point, int layer);
+    int add(std::string& point);
 
     void clear();
 

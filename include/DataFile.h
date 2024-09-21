@@ -17,7 +17,7 @@ public:
     void display();
     std::string getFilename();
 
-    void add(DataSection section);
+    bool add(DataSection section);
     bool isEmpty();
 
     ~DataFile();

@@ -19,3 +19,24 @@
 - Changed some logic in filereader to allow for a different filepath
 -- I've been doing testing to make sure its working properly
 -- Everything seems to be good
+
+Changes v1.2
+- Added multi-file selection
+-- Allows you to select multiple files and print them to the screen
+-- Automatically filters out duplicate entries so they are only read once
+- Fixed some bugs
+-- Fixed bug where reading a file with a header but no point prints infititely
+-- Fixed some empty lines from being added to data section
+-- Fixed bug with multiple lines of headers in a row
+-- Fixed bug with user selecting files crashing when entering a mix of random characters and numbers
+- Moved the parsing to the data section
+-- File handler should only deal with getting the data from the file
+-- Data section should deal with the actual data and what to do with it
+- Changed formatting
+-- Headers no longer require the ':'
+-- Printing only has 1 header
+-- Previous versions will still have the old formatting
+--- Still gets parsed, but only at the beginning
+- Some general code cleanup
+-- Removed some more nested items
+-- Hope I cleaned up readability with some early-returns and changing some loop break conditions

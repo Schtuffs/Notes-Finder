@@ -79,26 +79,21 @@ DataFile FileHandler::open(std::string const& path, std::string& filename) {
         return DataFile("<EMPTY_FILE>");
     }
 
-    // Remove beginning '\'
-    if (filename[0] == '\\') {
+    // Remove beginning '\', sometimes has 1 or 2
+    while (filename[0] == '\\') {
         filename = filename.substr(1);
     }
+
     DataFile dataFile(filename);
 
     std::string contents;
     DataSection dataSection;
-    int reads = 0;
     while(getline(file, contents)) {
         // Determine what kind of data was received in line
-        int parsed = this->parse(dataSection, contents);
-        switch(parsed) {
-        case PARSE_EMPTY:
+        int parsed = dataSection.add(contents);
+        if (parsed == ADD_EMPTY) {
             dataFile.add(dataSection);
             dataSection.clear();
-            break;
-        case PARSE_HEADER:
-        case PARSE_LINE:
-            break;
         }
     }
 
@@ -111,7 +106,7 @@ DataFile FileHandler::open(std::string const& path, std::string& filename) {
 bool FileHandler::checkExtension(std::string const& filename) {
     int extensionStart = 0;
     // Find where the period is
-    for(int i = filename.length() - 1; i >= 0; i--) {
+    for (int i = filename.length() - 1; i >= 0; i--) {
         if (filename[i] == '.') {
             extensionStart = i;
             break;
@@ -128,46 +123,6 @@ bool FileHandler::checkExtension(std::string const& filename) {
     }
 
     return false;
-}
-
-int FileHandler::parse(DataSection& dataSection, std::string const& line) {
-    int layer = 0;
-
-    // Deals with empty line
-    if (line.size() == 0) {
-        return PARSE_EMPTY;
-    }
-
-    // Deals with line being a section header
-    if (line[0] == ':') {
-        std::string data;
-        std::istringstream linestream(line);
-        while (getline(linestream, data, ':')) {
-            if (data.length() != 0) {
-                dataSection.addPoint(data, layer);
-            }
-            
-            if (linestream.tellg() > line.length() || linestream.tellg() < 0) {
-                break;
-            }
-        }
-        return PARSE_HEADER;
-    }
-
-    // Deals with actual datapoints (lines that have '-'). Reads until space 
-    for(int i = 0; i < line.length(); i++) {
-        if (line[i] == '-') {
-            layer++;
-            continue;
-        }
-        break;
-    }
-
-    // Set file to after the formatting, then get the line and add it to the dataSection
-    std::string data = line.substr(layer, line.length());
-    dataSection.addPoint(data, layer);
-
-    return PARSE_LINE;
 }
 
 FileHandler::~FileHandler() {

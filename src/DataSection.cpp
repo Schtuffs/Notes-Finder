@@ -7,23 +7,13 @@ DataSection::DataSection() {
 }
 
 void DataSection::display() {
+    // Checks this datasection 
     bool headerAdded = false;
     for(int i = 0; i < this->points.size(); i++) {
         // Print the header with different style
-        while (this->layers[i] == 0) {
-            // Adds the header points
-            std::cout << this->points[i];
-
-            // Determine if this is the last header point
-            if (this->layers.size() >= i + 1 && this->layers[i + 1] == 0) {
-                std::cout << ", ";
-            }
-            i++;
-        }
-        // After header is added, add the endline
-        if (!headerAdded) {
-            headerAdded = true;
-            std::cout << std::endl;
+        if (i == 0) {
+            std::cout << this->points[0] << std::endl;
+            continue;
         }
 
         // Print initial spaces
@@ -31,12 +21,40 @@ void DataSection::display() {
         for(int j = 0; j < totalSpaces; j++) {
             std::cout << " ";
         }
+
         // Add bullet point
         std::cout << OUTPUT_BULLET << " ";
 
         // Add data
         std::cout << this->points[i] << std::endl;
     }
+}
+
+int DataSection::parse(std::string const& line) {
+    int layer = PARSE_ERROR;
+    // Deals with empty line
+    
+    if (line.size() == 0) {
+        return PARSE_EMPTY;
+    }
+
+    // Deals with line being a section header
+    if (line[0] != '-') {
+        return PARSE_HEADER;
+    }
+
+    // Deals with actual datapoints (lines that have '-'). Reads until space 
+    layer = 0;
+    for(int i = 0; i < line.length(); i++) {
+        // Increase layer until not hyphen found
+        if (line[i] != '-') {
+            break;
+        }
+        layer++;
+    }
+
+    
+    return layer;
 }
 
 std::string& DataSection::formatPoint(std::string& point) {
@@ -51,12 +69,20 @@ std::string& DataSection::formatPoint(std::string& point) {
             startIndex++;
             continue;
         }
+        if (point[i] == '-') {
+            startIndex++;
+            continue;
+        }
         break;
     }
 
     // Remove trailing characters
     for(int i = size - 1; i > 0; i--) {
-        if (point[i] == ' ' || point[i] == '\n') {
+        if (point[i] == ' ') {
+            size--;
+            continue;
+        }
+        if (point[i] == '\n') {
             size--;
             continue;
         }
@@ -66,22 +92,48 @@ std::string& DataSection::formatPoint(std::string& point) {
     return point;
 }
 
-void DataSection::addPoint(std::string& point, int layer) {
-    this->formatPoint(point);
+int DataSection::add(std::string& point) {
+    // Parse point data
+    int layer = this->parse(point);
 
-    if (point.size() == 0) {
-        return;
+    // Ignore if error
+    if (layer == PARSE_ERROR) {
+        return ADD_FAILURE;
     }
 
-    // Check that the layer can only be increased by 1 from the previous element
-    if (layers.size() != 0) {
-        if (layer > layers[layers.size() - 1] + 1) {
-            layer = layers[layers.size() - 1] + 1;
+    if (layer == PARSE_EMPTY) {
+        return ADD_EMPTY;
+    }
+
+    // Format the point
+    this->formatPoint(point);
+
+    // Check point still exists
+    if (point.size() == 0) {
+        return ADD_EMPTY;
+    }
+
+    // Check if this is first item, forces to be header
+    if (this->layers.size() == 0) {
+        layer = LAYER_HEADER;
+    }
+    // Otherwise, check formatting
+    else {
+        // Check if item is a header when it shouldn't be
+        if (layer == PARSE_HEADER) {
+            layer = 1;
+        }
+
+        // Check that the layer can only be increased by 1 from the previous element
+        if (layer > this->layers[this->layers.size() - 1] + 1) {
+            layer = this->layers[this->layers.size() - 1] + 1;
         }
     }
 
     this->points.push_back(point);
     this->layers.push_back(layer);
+
+    return ADD_SUCCESS;
 }
 
 void DataSection::clear() {
@@ -90,8 +142,18 @@ void DataSection::clear() {
 }
 
 bool DataSection::isEmpty() {
+    // Checks that there are points in the section at all
     if (this->points.size() == 0) {
         return true;
+    }
+
+    // Ensures theres more than just a header
+    for(int i = 0; i < this->layers.size(); i++) {
+        if (this->layers[i] != LAYER_HEADER) {
+            if (this->points[i].size() == 0) {
+                return true;
+            }
+        }
     }
     return false;
 }

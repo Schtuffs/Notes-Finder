@@ -18,10 +18,12 @@ std::string DataFile::getFilename() {
     return this->filename;
 }
 
-void DataFile::add(DataSection section) {
+bool DataFile::add(DataSection section) {
     if (!section.isEmpty()) {
         this->sections.push_back(section);
+        return true;
     }
+    return false;
 }
 
 bool DataFile::isEmpty() {

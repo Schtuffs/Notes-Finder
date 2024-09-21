@@ -7,7 +7,31 @@ DataHandler::DataHandler(std::string const& path) {
     this->dataFiles = fileHandler.read(path);
 }
 
-void DataHandler::diplay(std::string const& filename) {
+bool DataHandler::isDuplicate(std::vector<int> const& previouslyDisplayed, int fileNo) {
+    // Loop through each entry in the list
+    for(int i = 0; i < previouslyDisplayed.size(); i++) {
+        // Check against previous displays
+        if (fileNo == previouslyDisplayed[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int DataHandler::isFilename(std::vector<int> const& previouslyDisplayed, std::string const& filename) {
+    bool inList = false;
+    // Loop through each entry in the list
+    for (int i = 0; i < dataFiles.size(); i++) {
+        std::string saved = this->dataFiles[i].getFilename();
+        if (filename == saved) {
+            // Account for difference between loop vs user input
+            return i + 1;
+        }
+    }
+    return 0;
+}
+
+void DataHandler::display(std::string const& filename) {
     std::cout << std::endl;
     // User wants to exit
     if (filename == "0") {
@@ -43,6 +67,44 @@ void DataHandler::diplay(std::string const& filename) {
         }
     }
     std::cout << "Could not show any files..." << std::endl;
+}
+
+void DataHandler::display(std::vector<std::string> const& filenames) {
+    // Prevents same file from being displayed multiple times
+    std::vector<int> previouslyDisplayed;
+
+    // Loop through inputted filenames to check for duplicates
+    for(int i = 0; i < filenames.size(); i++) {
+        // Break after exit
+        if (filenames[i] == "0") {
+            break;
+        }
+        
+        // Check if value is a number
+        int fileNo = 0;
+        try {
+            fileNo = stoi(filenames[i]);
+        }
+        catch (std::invalid_argument e) {
+            fileNo = 0;
+        }
+        
+        // Check ints
+        if (fileNo) {
+            if (!this->isDuplicate(previouslyDisplayed, fileNo)) {
+                previouslyDisplayed.push_back(fileNo);
+                this->display(filenames[i]);
+            }
+        }
+        // Check strings
+        else {
+            int index = this->isFilename(previouslyDisplayed, filenames[i]);
+            if (index && !this->isDuplicate(previouslyDisplayed, index)) {
+                previouslyDisplayed.push_back(index);
+                this->display(filenames[index]);
+            }
+        }
+    }
 }
 
 void DataHandler::displayFilenames() {

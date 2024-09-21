@@ -1,9 +1,6 @@
 #include <iostream>
 
-#include "../include/CONSTANTS.h"
-#include "../include/DataHandler.h"
-#include "../include/args.h"
-
+#include "../include/main.h"
 extern bool DEBUG;
 
 // Show user all menu options
@@ -11,8 +8,9 @@ void mainMenu(void) {
     std::cout << "X---------------X" << std::endl;
     std::cout << "|   Main Menu   |" << std::endl;
     std::cout << "X---------------X" << std::endl;
-    std::cout << "1. Read all files" << std::endl;
-    std::cout << "2. Read one file" << std::endl;
+    std::cout << FILE_READ_ALL_FILES << ". Read all files" << std::endl;
+    std::cout << FILE_READ_MULTIPLE_FILES << ". Select and read files" << std::endl;
+    std::cout << FILE_READ_SINGLE_FILE << ". Read one file" << std::endl;
     std::cout << CODE_EXIT << ". Exit" << std::endl;
 }
 
@@ -30,24 +28,37 @@ int getIntInput(int min, int max) {
     return userInput;
 }
 
-void readSelectedFiles(DataHandler& dataHandler) {
+void selectFile(DataHandler& dataHandler) {
     std::cout << "Enter one of the filenames displayed below: " << std::endl;
     dataHandler.displayFilenames();
     std::string file;
     std::cin >> file;
-    dataHandler.diplay(file);
+    dataHandler.display(file);
+}
+
+void selectFiles(DataHandler& dataHandler) {
+    std::cout << "Select the files you would like to open (" << CODE_EXIT << " to exit):" << std::endl;
+    dataHandler.displayFilenames();
+    std::string input, exit = std::to_string(CODE_EXIT);
+    std::vector<std::string> files;
+    do {
+        std::cin >> input;
+        files.push_back(input);
+    } while (input != exit);
+    dataHandler.display(files);
 }
 
 bool determineChoice(DataHandler& dataHandler, int value) {
     switch(value) {
     case FILE_READ_ALL_FILES:
-        dataHandler.diplay();
+        dataHandler.display();
         break;
     case FILE_READ_SINGLE_FILE: {
-        readSelectedFiles(dataHandler);
+        selectFile(dataHandler);
         break;
     }
-    case FILE_FIND_SINGLE_SECTION:
+    case FILE_READ_MULTIPLE_FILES:
+        selectFiles(dataHandler);
         break;
     case CODE_EXIT:
         return false;
@@ -74,7 +85,7 @@ int main(int argc, char* argv[]) {
     int programShouldRun = CODE_GOOD;
     do {
         mainMenu();
-        int userInput = getIntInput(1, 2);
+        int userInput = getIntInput(1, 3);
         programShouldRun = determineChoice(dataHandler, userInput);
     } while (programShouldRun != CODE_EXIT);
 

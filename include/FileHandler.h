@@ -21,9 +21,6 @@ private:
 
     // Checks file extension
     bool checkExtension(std::string const& filename);
-    
-    // Parse a line from a file
-    int parse(DataSection& dataSection, std::string const& line);
 
 public:
     FileHandler();

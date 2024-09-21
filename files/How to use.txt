@@ -1,0 +1,17 @@
+How to use
+- Entering text will create the header. Ex: "How to use"
+- Hyphen: '-' used for point indentation, multiple means lower layer
+- Terms
+-- Header
+--- The main point of a data section
+-- Data point
+--- A single line string
+--- Has an amount of extra spacing for the layer of the point
+-- Data section
+--- Has 1 header and multiple data points
+--- These are broken up by having an empty space
+This is forced into a point
+-- Thats because theres no space between the point and the header
+
+Section 2
+- Shows how sections are separated

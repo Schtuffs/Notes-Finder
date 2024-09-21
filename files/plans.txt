@@ -3,12 +3,20 @@
 -- More of a proof of concept?
 -- Fun to play around with
 -- Maybe more useful if I allow the user to add data
---- Means manual formatting would not be required
+--- Means manual formatting would not be fully required
 - This project was made to practice parsing data
 -- I intend to add some other functions
+--- Asterisk: '*' used to highlight important point, put after hyphens
+---- Can change the display colour of text
+---- Not sure how I want the colour selection to be implemented yet though
+----*0x00FF00 Maybe this will make it green
+----* a certain word will be *red*0xFF0000
 --- Finding a specific header
---- Displaying multiple, but only selected files
---- Displaying multiple, but only selected sections
+--- Finding/Displaying a single section
+--- Finding/Displaying multiple, but only selected sections
+---- User would enter the header name, or part of it, and function would look for said header
+---- Hopefully would use multithreading for faster searching through each file simultaneously
+---- Some sort of lock will be required on the display function
 --- Add extra formatting options for colouring for important points
 --- Add extra formatting options for colouring single words
 - I also wanted to practice my file handling for my next project

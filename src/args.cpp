@@ -69,6 +69,3 @@ void args::parse(int argc, char* argv[], std::string& path) {
     }
 }
 
-
-
-
