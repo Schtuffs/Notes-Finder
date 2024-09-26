@@ -40,3 +40,15 @@ Changes v1.2
 - Some general code cleanup
 -- Removed some more nested items
 -- Hope I cleaned up readability with some early-returns and changing some loop break conditions
+
+Changes v1.3
+- Added *GREEN COLOURS! *CYAN :D
+--*YELLOW Seems to work on both windows and linux
+--- Tested on *BBLUE 1 windows 11*, *BRED 1 Ubuntu*, and *BGREEN 1 Mint system
+--*BRED Can *BYELLOW create *BGREEN rainbow *BCYAN text *BBLUE in *BMAGENTA same *BWHITE line
+--- *BRED G*BYELLOW l*BGREEN u*BCYAN c*BBLUE o*BMAGENTA s*BWHITE e
+-- Finds space after text to actually read the colour
+- This is a small update, but its definitely the most fun
+-- Seems that most edge cases are caught how I want them to be
+--- Ex: *RED red text doesn't remove comma*, <-- its still there
+--- Ex: *Words *still *displayed *if *astericks *are *added

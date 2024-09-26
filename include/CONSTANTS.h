@@ -26,3 +26,17 @@
 #define ADD_EMPTY       2
 #define ADD_SPECIAL     3
 
+// Display colours
+#define BLACK   30
+#define RED     31
+#define GREEN   32
+#define YELLOW  33
+#define BLUE    34
+#define MAGENTA 35
+#define CYAN    36
+#define WHITE   37
+
+// Bright Colours
+#define BRIGHT  60
+#define RESET_COLOUR    0
+

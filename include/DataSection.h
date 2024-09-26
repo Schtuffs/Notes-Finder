@@ -16,6 +16,11 @@ private:
     int parse(std::string const& line);
     std::string& formatPoint(std::string& point);
 
+    void setColour(int colour);
+    void resetColour();
+    void printPoint(std::string& point);
+    int findColour(std::string& point, int& index);
+
 public:
     DataSection();
 

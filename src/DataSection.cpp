@@ -6,9 +6,22 @@ DataSection::DataSection() {
     // Nothing todo
 }
 
+void DataSection::setColour(int colour) {
+    if (colour == RESET_COLOUR) {
+        this->resetColour();
+        return;
+    }
+    
+
+    std::cout << "\033[" << colour << "m";
+}
+
+void DataSection::resetColour() {
+    std::cout << "\033[0m";
+}
+
 void DataSection::display() {
     // Checks this datasection 
-    bool headerAdded = false;
     for(int i = 0; i < this->points.size(); i++) {
         // Print the header with different style
         if (i == 0) {
@@ -25,9 +38,90 @@ void DataSection::display() {
         // Add bullet point
         std::cout << OUTPUT_BULLET << " ";
 
-        // Add data
-        std::cout << this->points[i] << std::endl;
+        // Add print data, parsing for '*'
+        this->printPoint(this->points[i]);
     }
+}
+
+void DataSection::printPoint(std::string& point) {
+    for(int i = 0; i < point.size(); i++) {
+        if (point[i] == '*') {
+            this->setColour(this->findColour(point, i));
+        }
+        std::cout << point[i];
+    }
+    std::cout << std::endl;
+    this->resetColour();
+}
+
+int DataSection::findColour(std::string& point, int& index) {
+    // Increase past the asterick
+    index++;
+    int startIndex = index;
+
+    std::string textColour = "";
+    while(index < point.size()) {
+        if (point[index] == ' ') {
+            break;
+        }
+        textColour += point[index];
+        index++;
+    }
+
+    // Determine which colour was typed
+
+    // First, check if bright colour
+    int colour = RESET_COLOUR;
+    bool bright = false;
+    if (textColour[0] == 'B') {
+        colour = BRIGHT;
+        textColour = textColour.substr(1);
+    }
+
+    // Then check the colour
+    bool coloured = false;
+    if (textColour == "BLACK") {
+        colour += BLACK;
+        coloured = true;
+    }
+    else if (textColour == "RED") {
+        colour += RED;
+        coloured = true;
+    }
+    else if (textColour == "GREEN") {
+        colour += GREEN;
+        coloured = true;
+    }
+    else if (textColour == "YELLOW") {
+        colour += YELLOW;
+        coloured = true;
+    }
+    else if (textColour == "BLUE") {
+        colour += BLUE;
+        coloured = true;
+    }
+    else if (textColour == "MAGENTA") {
+        colour += MAGENTA;
+        coloured = true;
+    }
+    else if (textColour == "CYAN") {
+        colour += CYAN;
+        coloured = true;
+    }
+    else if (textColour == "WHITE") {
+        colour += WHITE;
+        coloured = true;
+    }
+    
+    // Only returns colour if actual colour is set
+    if (coloured) {
+        // Increase index to remove printing extra space
+        index++;
+        return colour;
+    }
+    // Prevent incorrect colours from deleting data in case of random '*'
+    index = startIndex;
+    return RESET_COLOUR;
 }
 
 int DataSection::parse(std::string const& line) {
