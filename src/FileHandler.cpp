@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/FileHandler.h"
+#include "FileHandler.h"
 
 extern bool DEBUG;
 

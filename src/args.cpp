@@ -1,4 +1,4 @@
-#include "../include/args.h"
+#include "args.h"
 
 bool DEBUG = false;
 
@@ -11,7 +11,7 @@ void args::detail::help() {
 }
 
 void args::detail::path(std::string& path, std::vector<std::string>& argv, int index) {
-    if (index + 1 >= argv.size()) {
+    if (index + 1 >= (int)(argv.size())) {
         std::cout << "No specified path given..." << std::endl;
         return;
     }
@@ -56,10 +56,10 @@ void args::parse(int argc, char* argv[], std::string& path) {
     }
 
     // Parse each argument
-    for (int i = 0; i < args.size(); i++) {
+    for (int i = 0; i < (int)(args.size()); i++) {
 
         // Argument is too short
-        if (args[i].length() < 2) {
+        if ((int)(args[i].length()) < 2) {
             continue;
         }
         
@@ -88,6 +88,9 @@ void args::parse(int argc, char* argv[], std::string& path) {
         // Shows the colour commands for changing text colour
         else if (args[i][1] == 'c') {
             args::detail::colours();
+        }
+        else {
+            std::cout << "Unknown argument: -" << args[i][1] << std::endl;
         }
     }
 }

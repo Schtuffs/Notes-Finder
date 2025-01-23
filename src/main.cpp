@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/main.h"
+#include "main.h"
 extern bool DEBUG;
 
 // Show user all menu options
@@ -70,7 +70,8 @@ bool determineChoice(DataHandler& dataHandler, int value) {
 }
 
 int main(int argc, char* argv[]) {
-    std::string path = "../files/";
+    // ⤄
+    std::string path = "./";
     if (argc != 1) {
         // Setup object to be passed to functions
         args::parse(argc, argv, path);

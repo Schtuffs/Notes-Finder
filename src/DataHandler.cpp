@@ -1,4 +1,4 @@
-#include "../include/DataHandler.h"
+#include "DataHandler.h"
 
 extern bool DEBUG;
 
@@ -50,7 +50,13 @@ void DataHandler::display(std::string const& filename) {
     // For finding and printing a single datafile
 
     // If user enters a number option
-    int userVal = atoi(filename.c_str());
+    int userVal;
+    try {
+        userVal = std::stoi(filename);
+    } catch(std::invalid_argument e) {
+        userVal = 0;
+    }
+    
     if (userVal) {
         userVal--;
         if (0 <= userVal && userVal < this->dataFiles.size()) {
@@ -98,10 +104,11 @@ void DataHandler::display(std::vector<std::string> const& filenames) {
         }
         // Check strings
         else {
-            int index = this->isFilename(previouslyDisplayed, filenames[i]);
+            std::string file = filenames[i];
+            int index = this->isFilename(previouslyDisplayed, file);
             if (index && !this->isDuplicate(previouslyDisplayed, index)) {
                 previouslyDisplayed.push_back(index);
-                this->display(filenames[index]);
+                this->display(file);
             }
         }
     }

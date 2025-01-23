@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include "../include/CONSTANTS.h"
+#include "CONSTANTS.h"
 
 class DataSection {
 private:

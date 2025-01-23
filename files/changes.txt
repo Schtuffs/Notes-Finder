@@ -52,3 +52,9 @@ Changes v1.3
 -- Seems that most edge cases are caught how I want them to be
 --- Ex: *RED red text doesn't remove comma*, <-- its still there
 --- Ex: *Words *still *displayed *if *astericks *are *added
+
+Changes v1.4
+- Added a makefile
+-- Compilation time was taking too long
+--- A whole 5-10 seconds
+--- This is not serious, I just wanted to learn makefiles

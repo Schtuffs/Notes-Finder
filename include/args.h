@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../include/CONSTANTS.h"
+#include "CONSTANTS.h"
 
 namespace args {
     void parse(int argc, char* argv[], std::string& path);

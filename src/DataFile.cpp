@@ -1,4 +1,4 @@
-#include "../include/DataFile.h"
+#include "DataFile.h"
 
 extern bool DEBUG;
 

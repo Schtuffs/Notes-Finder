@@ -8,7 +8,7 @@
 #include <sstream>
 
 #include "DataFile.h"
-#include "../include/CONSTANTS.h"
+#include "CONSTANTS.h"
 
 // Allows for reading of files, and returns the content of said files.
 class FileHandler {

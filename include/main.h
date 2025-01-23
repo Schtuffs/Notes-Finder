@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../include/CONSTANTS.h"
-#include "../include/DataHandler.h"
-#include "../include/args.h"
+#include "CONSTANTS.h"
+#include "DataHandler.h"
+#include "args.h"
 
 void mainMenu();
 
