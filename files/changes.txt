@@ -58,3 +58,8 @@ Changes v1.4
 -- Compilation time was taking too long
 --- A whole 5-10 seconds
 --- This is not serious, I just wanted to learn makefiles
+
+Changes v1.5
+- Allows subdirectories
+-- Recursive file checks
+-- Can be enabled with -r flag

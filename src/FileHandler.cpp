@@ -3,6 +3,7 @@
 #include "FileHandler.h"
 
 extern bool DEBUG;
+extern bool FILE_RECURSIVE;
 
 FileHandler::FileHandler() {
     // Nothing todo
@@ -45,17 +46,33 @@ std::vector<std::string> FileHandler::readFileNames(std::string path) {
         }
 
         // Get each filename from the specified path, and add to objects vector
-        for(const auto& entry : std::filesystem::directory_iterator(path)) {
-            std::string filename = entry.path().string();
-            
-            // Check if there is more than just filepath
-            if (filename <= path) {
-                continue;
-            }
+        if (FILE_RECURSIVE) {
+            for(const auto& entry : std::filesystem::recursive_directory_iterator(path)) {
+                std::string filename = entry.path().string();
 
-            // Shrink string to just filename and add to list
-            filename = filename.substr(path.length());
-            filenames.push_back(filename);
+                // Check if there is more than just filepath
+                if (filename <= path) {
+                    continue;
+                }
+
+                // Shrink string to just filename and add to list
+                filename = filename.substr(path.length());
+                filenames.push_back(filename);
+            }
+        }
+        else {
+            for(const auto& entry : std::filesystem::directory_iterator(path)) {
+                std::string filename = entry.path().string();
+
+                // Check if there is more than just filepath
+                if (filename <= path) {
+                    continue;
+                }
+
+                // Shrink string to just filename and add to list
+                filename = filename.substr(path.length());
+                filenames.push_back(filename);
+            }
         }
     }
     catch (std::filesystem::filesystem_error e) {
@@ -69,13 +86,17 @@ DataFile FileHandler::open(std::string const& path, std::string& filename) {
     std::ifstream file;
     
     if (!this->checkExtension(filename)) {
-        std::cout << "Invalid file extension: " << filename << std::endl;
+        if (DEBUG) {
+            std::cout << "Invalid file extension: " << filename << std::endl;
+        }
         return DataFile("<INVALID_EXTENSION>");
     }
     
     file.open(path + filename);
     if (!file.is_open()) {
-        std::cout << "Could not open file: " << filename << std::endl;
+        if (DEBUG) {
+            std::cout << "Could not open file: " << filename << std::endl;
+        }
         return DataFile("<EMPTY_FILE>");
     }
 

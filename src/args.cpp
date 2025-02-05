@@ -1,6 +1,6 @@
 #include "args.h"
 
-bool DEBUG = false;
+bool DEBUG = false, FILE_RECURSIVE = false;
 
 void args::detail::help() {
     std::cout << "-h    shows all commands" << std::endl;
@@ -46,6 +46,10 @@ void args::detail::colours() {
     std::cout << std::endl;
 }
 
+void args::detail::recursive() {
+    FILE_RECURSIVE = true;
+}
+
 void args::parse(int argc, char* argv[], std::string& path) {
     // Turn argv into strings
     std::vector<std::string> args;
@@ -88,6 +92,10 @@ void args::parse(int argc, char* argv[], std::string& path) {
         // Shows the colour commands for changing text colour
         else if (args[i][1] == 'c') {
             args::detail::colours();
+        }
+        // Allows recursive filechecks
+        else if (args[i][1] == 'r') {
+            args::detail::recursive();
         }
         else {
             std::cout << "Unknown argument: -" << args[i][1] << std::endl;
