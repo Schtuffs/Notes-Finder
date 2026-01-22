@@ -75,7 +75,7 @@ std::vector<std::string> FileHandler::readFileNames(std::string path) {
             }
         }
     }
-    catch (std::filesystem::filesystem_error e) {
+    catch (std::filesystem::filesystem_error& e) {
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }

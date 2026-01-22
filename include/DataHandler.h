@@ -27,6 +27,6 @@ private:
     bool isDuplicate(std::vector<int> const& previouslyDisplayed, int fileNo);
 
     // Returns index of item if it is a duplicate
-    int isFilename(std::vector<int> const& previouslyDisplayed, std::string const& filename);
+    int isFilename(std::string const& filename);
 };
 

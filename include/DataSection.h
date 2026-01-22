@@ -19,7 +19,7 @@ private:
     void setColour(int colour);
     void resetColour();
     void printPoint(std::string& point);
-    int findColour(std::string& point, int& index);
+    int findColour(std::string& point, size_t& index);
 
 public:
     DataSection();

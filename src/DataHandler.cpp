@@ -13,7 +13,7 @@ std::vector<DataFile> DataHandler::readFiles() {
 
 bool DataHandler::isDuplicate(std::vector<int> const& previouslyDisplayed, int fileNo) {
     // Loop through each entry in the list
-    for(int i = 0; i < previouslyDisplayed.size(); i++) {
+    for(size_t i = 0; i < previouslyDisplayed.size(); i++) {
         // Check against previous displays
         if (fileNo == previouslyDisplayed[i]) {
             return true;
@@ -22,12 +22,10 @@ bool DataHandler::isDuplicate(std::vector<int> const& previouslyDisplayed, int f
     return false;
 }
 
-int DataHandler::isFilename(std::vector<int> const& previouslyDisplayed, std::string const& filename) {
-    bool inList = false;
-
+int DataHandler::isFilename(std::string const& filename) {
     // Loop through each entry in the list
     auto dataFiles = readFiles();
-    for (int i = 0; i < dataFiles.size(); i++) {
+    for (size_t i = 0; i < dataFiles.size(); i++) {
         std::string saved = dataFiles[i].getFilename();
         if (filename == saved) {
             // Account for difference between loop vs user input
@@ -57,16 +55,16 @@ void DataHandler::display(std::string const& filename) {
     // For finding and printing a single datafile
 
     // If user enters a number option
-    int userVal;
+    size_t userVal;
     try {
-        userVal = std::stoi(filename);
-    } catch(std::invalid_argument e) {
+        userVal = std::stoull(filename);
+    } catch(std::invalid_argument& e) {
         userVal = 0;
     }
     
     if (userVal) {
         userVal--;
-        if (0 <= userVal && userVal < dataFiles.size()) {
+        if (userVal < dataFiles.size()) {
             dataFiles[userVal].display();
             return;
         }
@@ -87,7 +85,7 @@ void DataHandler::display(std::vector<std::string> const& filenames) {
     std::vector<int> previouslyDisplayed;
 
     // Loop through inputted filenames to check for duplicates
-    for(int i = 0; i < filenames.size(); i++) {
+    for(size_t i = 0; i < filenames.size(); i++) {
         // Break after exit
         if (filenames[i] == "0") {
             break;
@@ -98,7 +96,7 @@ void DataHandler::display(std::vector<std::string> const& filenames) {
         try {
             fileNo = stoi(filenames[i]);
         }
-        catch (std::invalid_argument e) {
+        catch (std::invalid_argument& e) {
             fileNo = 0;
         }
         
@@ -112,7 +110,7 @@ void DataHandler::display(std::vector<std::string> const& filenames) {
         // Check strings
         else {
             std::string file = filenames[i];
-            int index = this->isFilename(previouslyDisplayed, file);
+            int index = this->isFilename(file);
             if (index && !this->isDuplicate(previouslyDisplayed, index)) {
                 previouslyDisplayed.push_back(index);
                 this->display(file);

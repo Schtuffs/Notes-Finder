@@ -21,7 +21,7 @@ void DataSection::resetColour() {
 
 void DataSection::display() {
     // Checks this datasection 
-    for(int i = 0; i < this->points.size(); i++) {
+    for(size_t i = 0; i < this->points.size(); i++) {
         // Print the header with different style
         if (i == 0) {
             std::cout << this->points[0] << std::endl;
@@ -43,7 +43,7 @@ void DataSection::display() {
 }
 
 void DataSection::printPoint(std::string& point) {
-    for(int i = 0; i < point.size(); i++) {
+    for(size_t i = 0; i < point.size(); i++) {
         if (point[i] == '*') {
             this->setColour(this->findColour(point, i));
         }
@@ -53,7 +53,7 @@ void DataSection::printPoint(std::string& point) {
     this->resetColour();
 }
 
-int DataSection::findColour(std::string& point, int& index) {
+int DataSection::findColour(std::string& point, size_t& index) {
     // Increase past the asterick
     index++;
     int startIndex = index;
@@ -71,7 +71,6 @@ int DataSection::findColour(std::string& point, int& index) {
 
     // First, check if bright colour
     int colour = RESET_COLOUR;
-    bool bright = false;
     if (textColour[0] == 'B') {
         colour = BRIGHT;
         textColour = textColour.substr(1);
@@ -138,7 +137,7 @@ int DataSection::parse(std::string const& line) {
 
     // Deals with actual datapoints (lines that have '-'). Reads until space 
     layer = 0;
-    for(int i = 0; i < line.length(); i++) {
+    for(size_t i = 0; i < line.length(); i++) {
         // Increase layer until not hyphen found
         if (line[i] != '-') {
             break;
@@ -153,7 +152,7 @@ int DataSection::parse(std::string const& line) {
 std::string& DataSection::formatPoint(std::string& point) {
     // Removes starting spaces
     int startIndex = 0, size = point.size();
-    for(int i = 0; i < point.size(); i++) {
+    for(size_t i = 0; i < point.size(); i++) {
         if (point[i] == ' ') {
             startIndex++;
             continue;
@@ -241,7 +240,7 @@ bool DataSection::isEmpty() {
     }
 
     // Ensures theres more than just a header
-    for(int i = 0; i < this->layers.size(); i++) {
+    for(size_t i = 0; i < this->layers.size(); i++) {
         if (this->layers[i] != LAYER_HEADER) {
             if (this->points[i].size() == 0) {
                 return true;
