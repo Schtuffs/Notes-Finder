@@ -8,22 +8,25 @@
 #include "FileHandler.h"
 
 class DataHandler {
-private:
-    std::vector<DataFile> dataFiles;
+public:
+    DataHandler(std::string const& path);
+    
+    void display(std::string const& filename = "");
+    void display(std::vector<std::string> const& filenames);
+    void displayFilenames();
+    
+    ~DataHandler();
 
+private:
+    std::string mPath;
+
+    // Reads files from system
+    std::vector<DataFile> readFiles();
+    
     // Returns if item is a duplicate
     bool isDuplicate(std::vector<int> const& previouslyDisplayed, int fileNo);
 
     // Returns index of item if it is a duplicate
     int isFilename(std::vector<int> const& previouslyDisplayed, std::string const& filename);
-
-public:
-    DataHandler(std::string const& path);
-
-    void display(std::string const& filename = "");
-    void display(std::vector<std::string> const& filenames);
-    void displayFilenames();
-
-    ~DataHandler();
 };
 

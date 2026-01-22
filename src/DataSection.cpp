@@ -11,7 +11,6 @@ void DataSection::setColour(int colour) {
         this->resetColour();
         return;
     }
-    
 
     std::cout << "\033[" << colour << "m";
 }

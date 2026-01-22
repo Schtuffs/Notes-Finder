@@ -3,8 +3,12 @@
 extern bool DEBUG;
 
 DataHandler::DataHandler(std::string const& path) {
-    FileHandler fileHandler;
-    this->dataFiles = fileHandler.read(path);
+    mPath = path;
+}
+
+std::vector<DataFile> DataHandler::readFiles() {
+    FileHandler handler;
+    return handler.read(mPath);
 }
 
 bool DataHandler::isDuplicate(std::vector<int> const& previouslyDisplayed, int fileNo) {
@@ -20,9 +24,11 @@ bool DataHandler::isDuplicate(std::vector<int> const& previouslyDisplayed, int f
 
 int DataHandler::isFilename(std::vector<int> const& previouslyDisplayed, std::string const& filename) {
     bool inList = false;
+
     // Loop through each entry in the list
+    auto dataFiles = readFiles();
     for (int i = 0; i < dataFiles.size(); i++) {
-        std::string saved = this->dataFiles[i].getFilename();
+        std::string saved = dataFiles[i].getFilename();
         if (filename == saved) {
             // Account for difference between loop vs user input
             return i + 1;
@@ -37,10 +43,11 @@ void DataHandler::display(std::string const& filename) {
     if (filename == "0") {
         return;
     }
-    
+
     // For printing all datafiles
+    auto dataFiles = readFiles();
     if (filename.length() == 0) {
-        for(DataFile& dataFile : this->dataFiles) {
+        for(DataFile& dataFile : dataFiles) {
             dataFile.display();
             std::cout << std::endl << std::endl;
         }
@@ -59,14 +66,14 @@ void DataHandler::display(std::string const& filename) {
     
     if (userVal) {
         userVal--;
-        if (0 <= userVal && userVal < this->dataFiles.size()) {
-            this->dataFiles[userVal].display();
+        if (0 <= userVal && userVal < dataFiles.size()) {
+            dataFiles[userVal].display();
             return;
         }
     }
 
     // If user enters a filename
-    for (DataFile& dataFile : this->dataFiles) {
+    for (DataFile& dataFile : dataFiles) {
         if (filename == dataFile.getFilename()) {
             dataFile.display();
             return;
@@ -115,8 +122,9 @@ void DataHandler::display(std::vector<std::string> const& filenames) {
 }
 
 void DataHandler::displayFilenames() {
+    std::vector<DataFile> dataFiles = readFiles();
     int i = 1;
-    for (DataFile& dataFile : this->dataFiles) {
+    for (DataFile& dataFile : dataFiles) {
         std::cout << i++ << ". " << dataFile.getFilename() << std::endl;
     }
     std::cout << CODE_EXIT << ". Exit" << std::endl;
